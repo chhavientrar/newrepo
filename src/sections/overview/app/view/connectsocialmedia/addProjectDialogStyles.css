@@ -1,0 +1,16 @@
+.dialogContent {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+/* Hide the scrollbar for WebKit browsers */
+.dialogContent::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* Optional: just to be sure */
+}
+
+/* Hide the scrollbar for other browsers like Firefox */
+.dialogContent {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
