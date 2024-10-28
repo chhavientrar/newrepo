@@ -32,10 +32,10 @@ export default function SkillCard({ title, skillsArray, sx, ...other }: Props) {
   const [newSkill, setNewSkill] = useState('');
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [suggestedSkills, setSuggestedSkills] = useState<any[]>([]);
+  const [deleteSkill, setDeleteSkill] = useState<string | null>(null); // New state for delete confirmation
 
   const theme = useTheme();
-
-  console.log(quizCompleted, "quizCompleted")
+  console.log(quizCompleted);
 
   // Function to handle opening the dialog and fetching suggested skills
   const handleClickOpen = async () => {
@@ -49,7 +49,6 @@ export default function SkillCard({ title, skillsArray, sx, ...other }: Props) {
         },
       });
 
-      // Limit the number of suggested skills
       const limitedSkills = response.data.slice(0, 10);
       setSuggestedSkills(limitedSkills);
     } catch (error) {
@@ -60,6 +59,7 @@ export default function SkillCard({ title, skillsArray, sx, ...other }: Props) {
   const handleClose = () => {
     setOpen(false);
     setQuizOpen(false);
+    setDeleteSkill(null); // Close delete confirmation dialog
   };
 
   const handleAddSkill = () => {
@@ -87,19 +87,40 @@ export default function SkillCard({ title, skillsArray, sx, ...other }: Props) {
       .then((response) => {
         console.log('Skill added:', response.data);
 
-        // Update skill array with new score
         skillsArray.push({ skill_name: newSkill, score });
 
-        // Reset the skill input and trigger chart refresh
         setNewSkill('');
-        // setAnsweredQuestions(answeredQuestions);  // Pass answered questions to chart
       })
       .catch((error) => {
         console.error('Error adding skill:', error);
       });
   };
 
+  const handleDeleteSkill = (skillName: string) => {
+    setDeleteSkill(skillName); // Set the skill to be deleted and open confirmation dialog
+  };
 
+  const confirmDelete = () => {
+    if (deleteSkill) {
+      const updatedSkills = skillsArray.filter((skill: any) => skill.skill_name !== deleteSkill);
+
+      axios
+        .delete(`/users/skills/${deleteSkill}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Auth-Token': `${localStorage.getItem('auth-token')}`,
+          },
+        })
+        .then((response) => {
+          console.log('Skill deleted:', response.data);
+          setSuggestedSkills(updatedSkills); // Update local state
+          setDeleteSkill(null); // Close confirmation dialog
+        })
+        .catch((error) => {
+          console.error('Error deleting skill:', error);
+        });
+    }
+  };
 
   const handleSuggestedSkillClick = (skillName: string) => {
     setNewSkill(skillName);
@@ -123,7 +144,7 @@ export default function SkillCard({ title, skillsArray, sx, ...other }: Props) {
   return (
     <>
       <Card sx={{ display: 'flex', height: 320, mt: 1, ...sx }} {...other}>
-        <Box sx={{ flexGrow: 2 }}>
+        <Box sx={{ flexGrow: 1 }}>
           <CardHeader title={title} />
 
           <Grid
@@ -149,6 +170,7 @@ export default function SkillCard({ title, skillsArray, sx, ...other }: Props) {
                       variant="outlined"
                       label={skill?.skill_name}
                       color="primary"
+                      onDelete={() => handleDeleteSkill(skill?.skill_name)}
                     />
                   ))}
                   <Chip variant="outlined" label="Add Other" color="warning" onClick={handleClickOpen} />
@@ -203,6 +225,20 @@ export default function SkillCard({ title, skillsArray, sx, ...other }: Props) {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleAddSkill}>Add</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={!!deleteSkill} onClose={handleClose}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete the skill {deleteSkill}?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={confirmDelete} color="error">Delete</Button>
         </DialogActions>
       </Dialog>
 
