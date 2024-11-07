@@ -16,7 +16,8 @@ import { RouterLink } from 'src/routes/components';
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form';
+import { MenuItem } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -46,7 +47,8 @@ export default function ClassicLoginView() {
     try {
       const response = await axios.post(`/auth/login`, data, {});
 
-      localStorage.setItem('auth-token', response?.data);
+      localStorage.setItem('auth-token', response?.data.token);
+      localStorage.setItem('userType', response?.data?.userType)
 
       // toast.success('Loged In SucessFully', {
       //   position: 'bottom-right',
@@ -119,6 +121,7 @@ export default function ClassicLoginView() {
         }}
       />
 
+
       <Link
         component={RouterLink}
         href={paths.authDemo.classic.forgotPassword}
@@ -147,7 +150,7 @@ export default function ClassicLoginView() {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       {renderHead}
 
-      {renderForm}
+      {/* {renderForm} */}
     </FormProvider>
   );
 }

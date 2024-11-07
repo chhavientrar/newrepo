@@ -4,13 +4,13 @@ import { LogoutOptions, PopupLoginOptions, RedirectLoginOptions } from '@auth0/a
 
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
+  ? {
+    type: Key;
+  }
+  : {
+    type: Key;
+    payload: M[Key];
+  };
 };
 
 export type AuthUserType = null | Record<string, any>;
@@ -25,17 +25,17 @@ export type AuthStateType = {
 
 type CanRemove = {
   login?: (email: string, password: string) => Promise<void>;
- 
-    register?: (
-      email: string,
-      password: string,
-      firstName: string,
-      lastName: string,
-      studentId?: string,    // Add studentId
-      phoneNo?: string,      // Add phoneNo
-      type?: string          // Add type
-    )
-   => Promise<void>;
+
+  register?: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    studentId?: string,    // Add studentId
+    phoneNo?: string,      // Add phoneNo
+    type?: string          // Add type
+  )
+    => Promise<void>;
   //
   loginWithGoogle?: () => Promise<void>;
   loginWithGithub?: () => Promise<void>;

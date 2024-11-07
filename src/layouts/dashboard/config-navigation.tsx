@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
-
 import { paths } from 'src/routes/paths';
-
 import { useTranslate } from 'src/locales';
-
 import SvgColor from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -43,10 +40,27 @@ const ICONS = {
 
 export function useNavData() {
   const { t } = useTranslate();
+  const getRole = localStorage.getItem('userType');
 
-  const data = useMemo(
-    () => [
-      // OVERVIEW
+  const data = useMemo(() => {
+    // Define the base data structure for 'trainer'
+    if (getRole === 'trainer') {
+      return [
+        {
+          subheader: t('Trainer Access'),
+          items: [
+            {
+              title: t('Mark Attendance'),
+              path: paths.dashboard.markAttendance,
+              icon: ICONS.analytics,
+            },
+          ],
+        },
+      ];
+    }
+
+    // Default data structure for other user types
+    return [
       {
         subheader: t('PropelX'),
         items: [
@@ -57,8 +71,6 @@ export function useNavData() {
           },
         ],
       },
-
-      // MANAGEMENT
       {
         subheader: t('management'),
         items: [
@@ -79,14 +91,13 @@ export function useNavData() {
           },
           {
             title: t('Attendance Reports'),
-            path: paths.dashboard.chat,
+            path: paths.dashboard.markAttendance,
             icon: ICONS.analytics,
-          }
+          },
         ],
       },
-    ],
-    [t]
-  );
+    ];
+  }, [t, getRole]);
 
   return data;
 }
