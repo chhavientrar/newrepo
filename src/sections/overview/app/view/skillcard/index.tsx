@@ -173,7 +173,7 @@ export default function SkillCard({ title, skillsArray, sx, ...other }: Props) {
                       onDelete={() => handleDeleteSkill(skill?.skill_name)}
                     />
                   ))}
-                  <Chip variant="outlined" label="Add Other" color="warning" onClick={handleClickOpen} />
+                  <Chip variant="outlined" label={skillsArray?.length > 0 ? "Add Other" : "Add Skills"} color="warning" onClick={handleClickOpen} />
                 </Grid>
               </Box>
             </Grid>

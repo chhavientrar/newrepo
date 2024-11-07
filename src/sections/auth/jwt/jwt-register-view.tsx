@@ -2,8 +2,7 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup'; // Import axios
-
+import { yupResolver } from '@hookform/resolvers/yup';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
@@ -11,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import InputAdornment from '@mui/material/InputAdornment'; // Import for dropdown
+import InputAdornment from '@mui/material/InputAdornment';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -20,7 +19,7 @@ import { useRouter, useSearchParams } from 'src/routes/hooks';
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import Iconify from 'src/components/iconify';
-import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form'; // RHFSelect for the dropdown
+import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -31,24 +30,24 @@ export default function JwtRegisterView() {
   const returnTo = searchParams.get('returnTo');
   const password = useBoolean();
 
-  // Validation schema to include only 'name' instead of 'firstName' and 'lastName'
   const RegisterSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'), // Updated to single name field
+    name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     password: Yup.string().required('Password is required'),
-    studentId: Yup.string().required('Student ID is required'), // New field
-    phoneNo: Yup.string().required('Phone number is required'), // New field
-    type: Yup.string().required('User type is required'), // New field
+    studentId: Yup.string().required('Student ID is required'),
+    phone: Yup.string().required('Phone number is required'),
+    type: Yup.string().required('User type is required'),
+    wantToBe: Yup.string().required('Want to be redirected')
   });
 
-  // Default values including the updated 'name' field
   const defaultValues = {
-    name: '', // Updated to single name field
+    name: '',
     email: '',
     password: '',
-    studentId: '', // New field
-    phoneNo: '', // New field
-    type: 'student', // Default to student
+    studentId: '',
+    phone: '91', // Default value with "+91"
+    type: 'student',
+    wantToBe: ''
   };
 
   const methods = useForm({
@@ -64,26 +63,30 @@ export default function JwtRegisterView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // API Call to the signup endpoint
-      const response = await axios.post('/auth/register', {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        studentId: data.studentId,
-        phoneNo: data.phoneNo,
-        type: data.type,
-      }, {
-        headers: {
-          'Content-Type': 'application/json' // Correct Content-Type header
+      const response = await axios.post(
+        '/auth/register',
+        {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          studentId: data.studentId,
+          phone: data.phone,
+          type: data.type,
+          wantToBe: data.wantToBe
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-      });
-      console.log(response);
+      );
 
-      router.push(returnTo || '/'); // Closing the axios.post method properly
+      console.log(response);
+      router.push(returnTo || '/');
     } catch (error) {
       console.error(error);
       reset();
-      setErrorMsg(error.response?.data?.message || error.message); // More informative error message
+      setErrorMsg(error.response?.data?.message || error.message);
     }
   });
 
@@ -103,11 +106,8 @@ export default function JwtRegisterView() {
 
   const renderForm = (
     <Stack spacing={2.5}>
-      {/* Single 'name' field */}
       <RHFTextField name="name" label="Name" />
-
       <RHFTextField name="email" label="Email address" />
-
       <RHFTextField
         name="password"
         label="Password"
@@ -123,24 +123,26 @@ export default function JwtRegisterView() {
         }}
       />
 
-      {/* New fields */}
       <RHFTextField name="studentId" label="Student ID" />
-      <RHFTextField name="phoneNo" label="Phone Number" />
 
-      {/* Dropdown for user type */}
+      {/* Phone Number field with default +91 */}
+      <RHFTextField
+        name="phone"
+        label="Phone Number"
+        onFocus={(e) => {
+          if (!e.target.value.startsWith('+91')) {
+            e.target.value = `+91${e.target.value}`;
+          }
+        }}
+      />
+
       <RHFSelect name="type" label="User Type">
         <MenuItem value="student">Student</MenuItem>
         <MenuItem value="trainer">Trainer</MenuItem>
       </RHFSelect>
+      <RHFTextField name="wantToBe" label="Want To Be" />
 
-      <LoadingButton
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitting}
-      >
+      <LoadingButton fullWidth color="inherit" size="large" type="submit" variant="contained" loading={isSubmitting}>
         Create account
       </LoadingButton>
     </Stack>

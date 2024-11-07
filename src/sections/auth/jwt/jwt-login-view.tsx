@@ -19,10 +19,11 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import Footer from 'src/layouts/main/footer';
 import { useAuthContext } from 'src/auth/hooks';
-import { PATH_AFTER_LOGIN } from 'src/config-global';
+import { PATH_AFTER_LOGIN, PATH_AFTER_LOGIN_ASTEACHER } from 'src/config-global';
 
 import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form';
+import { MenuItem } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -61,16 +62,21 @@ export default function JwtLoginView() {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log(data, "datatype");
     try {
       await login?.(data.email, data.password);
 
-      router.push(returnTo || PATH_AFTER_LOGIN);
+      // Determine redirect path based on user type
+      const redirectPath = localStorage.getItem('userType') === 'trainer' ? PATH_AFTER_LOGIN_ASTEACHER : (returnTo || PATH_AFTER_LOGIN);
+
+      router.push(redirectPath);
     } catch (error) {
       console.error(error);
       reset();
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
+
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5 }}>
@@ -104,6 +110,7 @@ export default function JwtLoginView() {
           ),
         }}
       />
+
 
       <Link variant="body2" color="inherit" underline="always" sx={{ alignSelf: 'flex-end' }}>
         Forgot password?

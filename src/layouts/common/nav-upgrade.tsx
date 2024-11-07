@@ -39,15 +39,17 @@ export default function NavUpgrade() {
         </Stack> */}
 
         {/* Add the "Create Resume" button */}
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2 }} // Adds margin-top for spacing
-          onClick={() => console.log('Create Resume button clicked!')}
-        >
-          Create Resume
-        </Button>
+        {localStorage.getItem('userType') !== 'trainer' && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }} // Adds margin-top for spacing
+            onClick={() => console.log('Create Resume button clicked!')}
+          >
+            Create Resume
+          </Button>
 
+        )}
       </Stack>
     </Stack>
   );

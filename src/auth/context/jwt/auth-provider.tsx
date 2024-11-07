@@ -127,6 +127,8 @@ export function AuthProvider({ children }: Props) {
     const accessToken = res?.data?.token;
     console.log(accessToken, "accesstoken");
     localStorage.setItem(STORAGE_KEY, accessToken);
+    // localStorage.setItem('auth-token', response?.data.token);
+    localStorage.setItem('userType', res?.data?.userType)
 
     setSession(accessToken);
 
