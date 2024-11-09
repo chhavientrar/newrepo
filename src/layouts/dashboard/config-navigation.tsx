@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
+
 import { paths } from 'src/routes/paths';
+
 import { useTranslate } from 'src/locales';
+
 import SvgColor from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -47,19 +50,23 @@ export function useNavData() {
     if (getRole === 'trainer') {
       return [
         {
-          subheader: t('Trainer Access'),
+          subheader: t('Trainer'),
           items: [
             {
               title: t('Mark Attendance'),
               path: paths.dashboard.markAttendance,
               icon: ICONS.analytics,
             },
+            {
+              title: t('Schedule Class'),
+              path: paths.dashboard.scheduleClass,
+              icon: ICONS.calendar,
+            },
           ],
         },
       ];
     }
 
-    // Default data structure for other user types
     return [
       {
         subheader: t('PropelX'),
@@ -91,7 +98,7 @@ export function useNavData() {
           },
           {
             title: t('Attendance Reports'),
-            path: paths.dashboard.markAttendance,
+            path: paths.dashboard.attendanceReport,
             icon: ICONS.analytics,
           },
         ],

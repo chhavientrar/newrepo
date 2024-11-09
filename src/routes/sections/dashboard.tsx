@@ -52,12 +52,15 @@ const TourCreatePage = lazy(() => import('src/pages/dashboard/tour/new'));
 const TourEditPage = lazy(() => import('src/pages/dashboard/tour/edit'));
 // FILE MANAGER
 const FileManagerPage = lazy(() => import('src/pages/dashboard/file-manager'));
-const MarkAttendancePage = lazy(() => import('src/pages/dashboard/mark-attendance'))
+const MarkAttendancePage = lazy(() => import('src/pages/dashboard/mark-attendance'));
+const SchedulePage = lazy(() => import('src/pages/dashboard/schedule-class'));
 // APP
 const ChatPage = lazy(() => import('src/pages/dashboard/chat'));
 const MailPage = lazy(() => import('src/pages/dashboard/mail'));
 const CalendarPage = lazy(() => import('src/pages/dashboard/calendar'));
 const KanbanPage = lazy(() => import('src/pages/dashboard/kanban'));
+
+const AttendaceReport = lazy(() => import('src/pages/dashboard/attendance-Report'));
 
 // TEST RENDER PAGE BY ROLE
 const PermissionDeniedPage = lazy(() => import('src/pages/dashboard/permission'));
@@ -157,6 +160,8 @@ export const dashboardRoutes = [
       },
       { path: 'file-manager', element: <FileManagerPage /> },
       { path: 'mark-attendance', element: <MarkAttendancePage /> },
+      { path: 'schedule-class', element: <SchedulePage /> },
+      { path: 'attendance-report', element: <AttendaceReport /> },
 
       { path: 'mail', element: <MailPage /> },
       { path: 'chat', element: <ChatPage /> },
