@@ -38,7 +38,7 @@ export default function JwtRegisterView() {
     studentId: Yup.string().required('Student ID is required'),
     phone: Yup.string().required('Phone number is required'),
     type: Yup.string().required('User type is required'),
-    wantToBe: Yup.string().required('Want to be redirected')
+    // wantToBe: Yup.string().required('Want to be redirected')
   });
 
   const defaultValues = {
@@ -47,8 +47,7 @@ export default function JwtRegisterView() {
     password: '',
     studentId: '',
     phone: '91', // Default value with "+91"
-    type: 'student',
-    wantToBe: ''
+    type: 'student'
   };
 
   const methods = useForm({
@@ -73,7 +72,7 @@ export default function JwtRegisterView() {
           studentId: data.studentId,
           phone: data.phone,
           type: data.type,
-          wantToBe: data.wantToBe
+          // wantToBe: data.wantToBe
         },
         {
           headers: {
@@ -141,7 +140,7 @@ export default function JwtRegisterView() {
         <MenuItem value="student">Student</MenuItem>
         <MenuItem value="trainer">Trainer</MenuItem>
       </RHFSelect>
-      <RHFTextField name="wantToBe" label="Want To Be" />
+      {/* <RHFTextField name="wantToBe" label="Want To Be" /> */}
 
       <LoadingButton fullWidth color="inherit" size="large" type="submit" variant="contained" loading={isSubmitting}>
         Create account
