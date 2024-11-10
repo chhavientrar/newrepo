@@ -1,10 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
-import { Pie } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
     Legend,
     Tooltip,
-    ArcElement,
+    BarElement,
     LinearScale,
     CategoryScale,
     Chart as ChartJS,
@@ -13,18 +13,18 @@ import {
 import { Card, Typography } from "@mui/material";
 
 // Register chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale);
+ChartJS.register(BarElement, Tooltip, Legend, CategoryScale, LinearScale);
 
 export default function AttendanceReport() {
-    // Dummy data for the attendance report
+    // Dummy data for the attendance report (Bar Chart)
     const attendanceData = {
-        labels: ["Present", "Absent"],
+        labels: ["Student 1", "Student 2", "Student 3", "Student 4", "Student 5"], // Student names
         datasets: [
             {
                 label: "Attendance",
-                data: [85, 15], // 85% Present, 15% Absent
-                backgroundColor: ["#4CAF50", "#FF5252"],
-                borderColor: ["#4CAF50", "#FF5252"],
+                data: [80, 90, 75, 65, 95], // Attendance percentages for each student
+                backgroundColor: "#4CAF50", // Color for the bars
+                borderColor: "#4CAF50",
                 borderWidth: 1,
             },
         ],
@@ -36,47 +36,34 @@ export default function AttendanceReport() {
                 Attendance Report
             </Typography>
 
-            {/* Option 1: Wrap in a div with fixed width and height */}
-            <div style={{ width: "300px", height: "300px", margin: "0 auto" }}>
-                <Pie
+            {/* Bar Chart */}
+            <div style={{ width: "100%", height: "400px" }}>
+                <Bar
                     data={attendanceData}
                     options={{
                         responsive: true,
+                        scales: {
+                            x: {
+                                beginAtZero: true, // Start X axis from zero
+                            },
+                            y: {
+                                beginAtZero: true, // Start Y axis from zero
+                            },
+                        },
                         plugins: {
                             legend: {
-                                position: "bottom",
+                                position: "top", // Position legend at the top
                             },
                             tooltip: {
                                 callbacks: {
                                     label: (tooltipItem) =>
-                                        `${tooltipItem.label}: ${tooltipItem.raw}%`,
+                                        `${tooltipItem.label}: ${tooltipItem.raw}%`, // Display percentage in tooltips
                                 },
                             },
                         },
                     }}
                 />
             </div>
-
-            {/* Option 2: Set width and height directly on the Pie component */}
-            {/* <Pie
-                data={attendanceData}
-                width={300}
-                height={300}
-                options={{
-                    maintainAspectRatio: false, // To use width and height settings
-                    plugins: {
-                        legend: {
-                            position: "bottom",
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: (tooltipItem) =>
-                                    `${tooltipItem.label}: ${tooltipItem.raw}%`,
-                            },
-                        },
-                    },
-                }}
-            /> */}
         </Card>
     );
 }
