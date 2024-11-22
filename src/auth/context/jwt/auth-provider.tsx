@@ -86,6 +86,7 @@ export function AuthProvider({ children }: Props) {
 
         localStorage.setItem('userName', res.data.name);
         localStorage.setItem('email', res.data.email);
+        localStorage.setItem('id', res.data._id);
         localStorage.setItem('profilePic', res.data.profileImageUrl);
 
         dispatch({

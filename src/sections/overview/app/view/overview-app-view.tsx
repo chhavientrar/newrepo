@@ -54,6 +54,7 @@ export default function OverviewAppView() {
       });
 
       const user = response?.data;
+      localStorage.setItem('id', user._id);
       setUserdata(user);
 
       if (user.skills && user.skills.length > 0) {
