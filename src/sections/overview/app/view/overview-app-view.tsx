@@ -20,7 +20,7 @@ import ProjectCards from './connectsocialmedia/projectcard';
 
 interface UserData {
   name: string;
-  phoneNo: any;
+  phone: any;
   profileImageUrl: any;
   email: string;
   skills: any[];
@@ -97,10 +97,10 @@ export default function OverviewAppView() {
         <Grid md={8} lg={8} xs={12}>
           <AppWelcome
             title={`Welcome back 👋 \n ${userData?.name}`}
-            description={`Phone No: ${userData?.phoneNo}`}
+            description={`Phone No: ${userData?.phone}`}
             otherinfo={`Email : ${userData?.email}`}
             userData={userData}
-            img={<SeoIllustration profilePic={userData?.profileImageUrl} />}
+            img={<SeoIllustration profilePic='https://static.vecteezy.com/system/resources/previews/026/976/801/non_2x/3d-icon-avatar-business-woman-with-glasses-illustration-of-smiling-happy-girl-cartoon-close-up-portrait-of-standing-girl-on-isolated-on-transparent-background-generative-ai-png.png' />}
             socialMediaLinks={userData?.socialMediaLinks || []} // Pass social media links here
           />
           <SkillCard skillsArray={userData?.skills} title="Skills" />
