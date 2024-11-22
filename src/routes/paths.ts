@@ -104,6 +104,7 @@ export const paths = {
     chat: `${ROOTS.DASHBOARD}/chat`,
     markAttendance: `${ROOTS.DASHBOARD}/mark-attendance`,
     attendanceReport: `${ROOTS.DASHBOARD}/attendance-report`,
+    quizComponent: `${ROOTS.DASHBOARD}/quiz-component`,
     scheduleClass: `${ROOTS.DASHBOARD}/schedule-class`,
     blank: `${ROOTS.DASHBOARD}/blank`,
     kanban: `${ROOTS.DASHBOARD}/kanban`,

@@ -65,6 +65,8 @@ const AttendaceReport = lazy(() => import('src/pages/dashboard/attendance-Report
 // TEST RENDER PAGE BY ROLE
 const PermissionDeniedPage = lazy(() => import('src/pages/dashboard/permission'));
 
+const QuestionPage = lazy(() => import('src/pages/dashboard/quiz-component'));
+
 const BlankPage = lazy(() => import('src/pages/dashboard/blank'));
 
 // ----------------------------------------------------------------------
@@ -162,6 +164,7 @@ export const dashboardRoutes = [
       { path: 'mark-attendance', element: <MarkAttendancePage /> },
       { path: 'schedule-class', element: <SchedulePage /> },
       { path: 'attendance-report', element: <AttendaceReport /> },
+      { path: 'quiz-component', element: <QuestionPage /> },
 
       { path: 'mail', element: <MailPage /> },
       { path: 'chat', element: <ChatPage /> },

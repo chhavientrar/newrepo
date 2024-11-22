@@ -82,25 +82,30 @@ export function useNavData() {
         subheader: t('management'),
         items: [
           {
-            title: t('Placement Journal'),
-            path: paths.dashboard.post.root,
+            title: t('Quiz'),
+            path: paths.dashboard.quizComponent,
             icon: ICONS.blog,
           },
-          {
-            title: t('jobs'),
-            path: paths.dashboard.job.root,
-            icon: ICONS.job,
-          },
-          {
-            title: t('chat/Messages'),
-            path: paths.dashboard.chat,
-            icon: ICONS.chat,
-          },
-          {
-            title: t('Attendance Reports'),
-            path: paths.dashboard.attendanceReport,
-            icon: ICONS.analytics,
-          },
+          // {
+          //   title: t('Placement Journal'),
+          //   path: paths.dashboard.post.root,
+          //   icon: ICONS.blog,
+          // },
+          // {
+          //   title: t('jobs'),
+          //   path: paths.dashboard.job.root,
+          //   icon: ICONS.job,
+          // },
+          // {
+          //   title: t('chat/Messages'),
+          //   path: paths.dashboard.chat,
+          //   icon: ICONS.chat,
+          // },
+          // {
+          //   title: t('Attendance Reports'),
+          //   path: paths.dashboard.attendanceReport,
+          //   icon: ICONS.analytics,
+          // },
         ],
       },
     ];
